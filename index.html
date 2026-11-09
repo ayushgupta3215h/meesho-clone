@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meesho - Online Shopping Site for Fashion, Electronics, Home & More</title>
+  <meta name="description" content="Shop women ethnic wear, western dresses, men fashion, electronics, home decor & beauty at lowest prices with Free Delivery & Easy Returns." />
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            meesho: {
+              purple: '#9f2089',
+              purpleDark: '#82156f',
+              purpleLight: '#fbf3fa',
+              pink: '#f43397',
+              pinkDark: '#d61f7d',
+              green: '#038d63',
+              greenLight: '#e6f6f1',
+              dark: '#333333',
+              muted: '#666666',
+              border: '#e7e7e7',
+              bg: '#f9f9f9'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased selection:bg-meesho-purple selection:text-white">
+
+  <!-- Top Announcement Bar -->
+  <div class="bg-gray-100 border-b border-gray-200 text-[11px] text-gray-600 hidden md:block">
+    <div class="max-w-7xl mx-auto px-4 py-1.5 flex justify-between items-center">
+      <div class="flex items-center gap-4">
+        <span class="flex items-center gap-1 font-medium text-meesho-purple">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+          Download App & Get ₹50 Off on 1st Order
+        </span>
+        <span class="text-gray-300">|</span>
+        <button onclick="openSupplierModal()" class="hover:text-meesho-purple transition-colors">
+          Become a Supplier (0% Commission)
+        </button>
+      </div>
+      <div class="flex items-center gap-5">
+        <button onclick="openDownloadModal()" class="hover:text-meesho-purple">Newsroom</button>
+        <span class="text-gray-300">|</span>
+        <button onclick="openOrdersModal()" class="hover:text-meesho-purple">Track Orders</button>
+        <span class="text-gray-300">|</span>
+        <span class="flex items-center gap-1 text-meesho-green font-semibold">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          100% Safe Payments
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Header -->
+  <header class="sticky top-0 z-30 bg-white border-b border-gray-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16 sm:h-20 gap-4">
+        
+        <!-- Mobile Menu Hamburger + Logo -->
+        <div class="flex items-center gap-3">
+          <button onclick="openMobileDrawer()" class="md:hidden p-1.5 text-gray-700 hover:text-meesho-purple focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+
+          <!-- Meesho Logo -->
+          <a href="#" onclick="resetAllFilters(); return false;" class="flex items-center gap-1.5 select-none group">
+            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-meesho-purple flex items-center justify-center text-white font-extrabold text-2xl shadow-sm group-hover:scale-105 transition-transform">
+              <span style="font-family: cursive, sans-serif; font-style: italic;">m</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-2xl sm:text-3xl font-extrabold tracking-tight text-meesho-purple leading-none">meesho</span>
+              <span class="text-[9px] font-bold text-gray-400 tracking-wider uppercase -mt-0.5">Smart Shopping</span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Global Search Bar with Autosuggestions -->
+        <div class="flex-1 max-w-2xl relative">
+          <div class="relative flex items-center">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </div>
+            <input 
+              id="main-search-input"
+              type="text" 
+              placeholder="Try Saree, Kurti, Shoes or Search by Product Code" 
+              class="header-search-input w-full pl-10 pr-10 py-2.5 sm:py-3 bg-gray-50 border border-gray-300 rounded-lg text-xs sm:text-sm text-gray-800 placeholder-gray-400 focus:bg-white transition-all shadow-inner"
+            />
+            <button 
+              onclick="document.getElementById('main-search-input').value = ''; state.searchQuery = ''; applyFilters();"
+              class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+              title="Clear search"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+          </div>
+
+          <!-- Autosuggestions Dropdown -->
+          <div id="search-suggestions" class="absolute top-full left-0 right-0 mt-1.5 bg-white border border-gray-200 rounded-xl shadow-2xl z-50 hidden overflow-hidden">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Right Navigation Icons / Buttons -->
+        <div class="flex items-center gap-4 sm:gap-6">
+          
+          <!-- Download App Dropdown Trigger (Desktop) -->
+          <div class="relative group hidden lg:block">
+            <button onclick="openDownloadModal()" class="flex items-center gap-1.5 text-xs font-semibold text-gray-700 hover:text-meesho-purple py-2">
+              <svg class="w-4 h-4 text-meesho-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+              <span>Download App</span>
+            </button>
+          </div>
+
+          <!-- Become a Supplier (Desktop) -->
+          <button onclick="openSupplierModal()" class="hidden xl:block text-xs font-semibold text-gray-700 hover:text-meesho-purple">
+            Become a Supplier
+          </button>
+
+          <!-- Divider -->
+          <div class="h-6 w-px bg-gray-200 hidden sm:block"></div>
+
+          <!-- Profile / Account -->
+          <div class="relative group">
+            <button class="flex flex-col items-center text-gray-700 hover:text-meesho-purple group p-1 focus:outline-none">
+              <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+              <span id="profile-header-label" class="text-[11px] font-medium hidden sm:block">Profile</span>
+            </button>
+
+            <!-- Profile Dropdown Menu -->
+            <div class="absolute right-0 top-full mt-2 w-64 bg-white rounded-xl shadow-2xl border border-gray-100 p-4 hidden group-hover:block z-40">
+              <div class="pb-3 border-b border-gray-100">
+                <h4 id="user-greeting" class="font-bold text-gray-800 text-sm">Welcome to Meesho</h4>
+                <p class="text-[11px] text-gray-500 mt-0.5">To access your orders and wishlist</p>
+                <button id="profile-auth-btn" onclick="openAuthModal()" class="w-full mt-3 py-2 bg-meesho-purple hover:bg-meesho-purpleDark text-white text-xs font-bold rounded-lg transition-colors">
+                  Sign Up / Log In
+                </button>
+              </div>
+              <div class="pt-2 text-xs text-gray-700 space-y-1">
+                <button onclick="openOrdersModal()" class="w-full flex items-center gap-2 py-2 px-2 hover:bg-meesho-purpleLight hover:text-meesho-purple rounded-md text-left">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                  <span>My Orders</span>
+                </button>
+                <button onclick="openWishlistModal()" class="w-full flex items-center gap-2 py-2 px-2 hover:bg-meesho-purpleLight hover:text-meesho-purple rounded-md text-left">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                  <span>My Wishlist</span>
+                </button>
+                <button onclick="openSupplierModal()" class="w-full flex items-center gap-2 py-2 px-2 hover:bg-meesho-purpleLight hover:text-meesho-purple rounded-md text-left">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                  <span>Supplier Hub</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Wishlist Trigger -->
+          <button onclick="openWishlistModal()" class="relative flex flex-col items-center text-gray-700 hover:text-meesho-purple p-1">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            <span class="text-[11px] font-medium hidden sm:block">Wishlist</span>
+            <span class="wishlist-badge absolute -top-1 -right-1 bg-red-500 text-white font-bold text-[10px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+          </button>
+
+          <!-- Cart Trigger -->
+          <button onclick="openCartDrawer()" class="relative flex flex-col items-center text-gray-700 hover:text-meesho-purple p-1">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+            <span class="text-[11px] font-medium hidden sm:block">Cart</span>
+            <span class="cart-badge absolute -top-1 -right-1 bg-meesho-purple text-white font-bold text-[10px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mega Menu Category Strip (Desktop) -->
+    <div class="border-t border-gray-100 hidden md:block relative">
+      <div class="max-w-7xl mx-auto px-4 flex items-center justify-between" id="desktop-nav-categories">
+        <!-- Dynamically rendered categories + mega menus -->
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Promotional Banner Carousel -->
+  <section class="max-w-7xl mx-auto px-4 pt-4 sm:pt-6">
+    <div class="relative overflow-hidden rounded-2xl shadow-md h-48 sm:h-72 md:h-88 lg:h-96 bg-gray-900">
+      
+      <!-- Slide 1: Mega Blockbuster Sale -->
+      <div class="carousel-slide absolute inset-0 opacity-100 flex items-center bg-gradient-to-r from-purple-900 via-pink-800 to-amber-700 text-white p-6 sm:p-12">
+        <div class="max-w-xl z-10">
+          <span class="inline-block px-3 py-1 bg-amber-400 text-gray-950 font-black text-xs uppercase tracking-wider rounded-full mb-2">Mega Blockbuster Sale</span>
+          <h2 class="text-2xl sm:text-4xl lg:text-5xl font-black leading-tight drop-shadow-md">
+            Lowest Prices Ever on Fashion & Lifestyle
+          </h2>
+          <p class="text-xs sm:text-base text-purple-100 mt-2 font-medium">
+            Free Delivery | Cash on Delivery | Easy 7 Days Return
+          </p>
+          <div class="mt-4 sm:mt-6 flex items-center gap-3">
+            <button onclick="setVisualCategory('Women Ethnic')" class="px-5 py-2.5 sm:px-7 sm:py-3 bg-white text-meesho-purple font-bold text-xs sm:text-sm rounded-xl shadow-lg hover:bg-gray-100 transition-all transform hover:-translate-y-0.5">
+              Shop Ethnic Wear &rarr;
+            </button>
+            <button onclick="setVisualCategory('Electronics')" class="px-5 py-2.5 sm:px-7 sm:py-3 bg-white/20 backdrop-blur text-white font-bold text-xs sm:text-sm rounded-xl hover:bg-white/30 transition-all">
+              Gadgets From ₹499
+            </button>
+          </div>
+        </div>
+        <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=900&auto=format&fit=crop&q=80" alt="Fashion Banner" class="absolute right-0 top-0 h-full w-1/2 object-cover opacity-60 md:opacity-85 mix-blend-luminosity mask-gradient" />
+      </div>
+
+      <!-- Slide 2: First Order Discount -->
+      <div class="carousel-slide absolute inset-0 opacity-0 pointer-events-none flex items-center bg-gradient-to-r from-pink-700 via-purple-800 to-indigo-900 text-white p-6 sm:p-12">
+        <div class="max-w-xl z-10">
+          <span class="inline-block px-3 py-1 bg-white text-meesho-pink font-black text-xs uppercase tracking-wider rounded-full mb-2">Special Welcome Offer</span>
+          <h2 class="text-2xl sm:text-4xl lg:text-5xl font-black leading-tight drop-shadow-md">
+            Flat ₹50 OFF On Your Very First Order!
+          </h2>
+          <p class="text-xs sm:text-base text-pink-100 mt-2 font-medium">
+            Use code <strong class="bg-black/30 px-2 py-0.5 rounded text-amber-300">MEESHOFIRST</strong> at checkout + 100% Free Shipping.
+          </p>
+          <div class="mt-4 sm:mt-6">
+            <button onclick="setVisualCategory('all')" class="px-6 py-2.5 sm:px-8 sm:py-3 bg-amber-400 text-gray-900 font-bold text-xs sm:text-sm rounded-xl shadow-lg hover:bg-amber-300 transition-all">
+              Claim Offer Now &rarr;
+            </button>
+          </div>
+        </div>
+        <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=900&auto=format&fit=crop&q=80" alt="Welcome Offer" class="absolute right-0 top-0 h-full w-1/2 object-cover opacity-60 md:opacity-85" />
+      </div>
+
+      <!-- Slide 3: Reseller / Supplier Pitch -->
+      <div class="carousel-slide absolute inset-0 opacity-0 pointer-events-none flex items-center bg-gradient-to-r from-emerald-800 via-teal-900 to-gray-900 text-white p-6 sm:p-12">
+        <div class="max-w-xl z-10">
+          <span class="inline-block px-3 py-1 bg-emerald-400 text-emerald-950 font-black text-xs uppercase tracking-wider rounded-full mb-2">Sell Online with 0% Commission</span>
+          <h2 class="text-2xl sm:text-4xl lg:text-5xl font-black leading-tight drop-shadow-md">
+            Grow Your Business Across 14 Crore+ Customers
+          </h2>
+          <p class="text-xs sm:text-base text-emerald-100 mt-2 font-medium">
+            Join 11 Lakh+ Indian suppliers and sell nationwide with 7-day payment cycles.
+          </p>
+          <div class="mt-4 sm:mt-6">
+            <button onclick="openSupplierModal()" class="px-6 py-2.5 sm:px-8 sm:py-3 bg-white text-emerald-900 font-bold text-xs sm:text-sm rounded-xl shadow-lg hover:bg-emerald-50 transition-all">
+              Start Selling Today &rarr;
+            </button>
+          </div>
+        </div>
+        <img src="https://images.unsplash.com/photo-1556742049-0a67c5574f73?w=900&auto=format&fit=crop&q=80" alt="Supplier Banner" class="absolute right-0 top-0 h-full w-1/2 object-cover opacity-50 md:opacity-75" />
+      </div>
+
+      <!-- Carousel Navigation Controls -->
+      <button id="carousel-prev" class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition-all z-20 focus:outline-none">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <button id="carousel-next" class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition-all z-20 focus:outline-none">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </button>
+
+      <!-- Dots Indicators -->
+      <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
+        <button class="carousel-dot h-2.5 w-6 rounded-full bg-white transition-all"></button>
+        <button class="carousel-dot h-2.5 w-2.5 rounded-full bg-white/40 transition-all"></button>
+        <button class="carousel-dot h-2.5 w-2.5 rounded-full bg-white/40 transition-all"></button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Value Propositions Strip -->
+  <section class="max-w-7xl mx-auto px-4 py-4 sm:py-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 bg-white p-4 rounded-xl border border-gray-200 shadow-sm text-center">
+      <div class="flex items-center justify-center sm:justify-start gap-3 p-2">
+        <div class="w-10 h-10 rounded-full bg-meesho-greenLight text-meesho-green flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        <div class="text-left">
+          <h4 class="text-xs sm:text-sm font-bold text-gray-800">Free Delivery</h4>
+          <p class="text-[11px] text-gray-500">On all products across India</p>
+        </div>
+      </div>
+      <div class="flex items-center justify-center sm:justify-start gap-3 p-2">
+        <div class="w-10 h-10 rounded-full bg-pink-50 text-meesho-pink flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div class="text-left">
+          <h4 class="text-xs sm:text-sm font-bold text-gray-800">Cash on Delivery</h4>
+          <p class="text-[11px] text-gray-500">Pay when your order arrives</p>
+        </div>
+      </div>
+      <div class="flex items-center justify-center sm:justify-start gap-3 p-2">
+        <div class="w-10 h-10 rounded-full bg-purple-50 text-meesho-purple flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+        </div>
+        <div class="text-left">
+          <h4 class="text-xs sm:text-sm font-bold text-gray-800">7 Days Easy Returns</h4>
+          <p class="text-[11px] text-gray-500">Hassle-free doorstep pickup</p>
+        </div>
+      </div>
+      <div class="flex items-center justify-center sm:justify-start gap-3 p-2">
+        <div class="w-10 h-10 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+        <div class="text-left">
+          <h4 class="text-xs sm:text-sm font-bold text-gray-800">Lowest Price Guarantee</h4>
+          <p class="text-[11px] text-gray-500">Direct from wholesale hubs</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Top Visual Categories Carousel ("Shop By Category") -->
+  <section class="max-w-7xl mx-auto px-4 py-2">
+    <div class="flex items-center justify-between mb-3">
+      <h3 class="text-base sm:text-lg font-bold text-gray-900 tracking-tight">Top Categories to Explore</h3>
+      <button onclick="setVisualCategory('all')" class="text-xs font-semibold text-meesho-purple hover:underline">View All</button>
+    </div>
+    <div id="visual-categories-container" class="flex gap-4 sm:gap-6 overflow-x-auto pb-3 horizontal-scroll-hide select-none">
+      <!-- Populated dynamically via JS -->
+    </div>
+  </section>
+
+  <!-- Main Products Feed Section with Filter Sidebar -->
+  <main id="products-feed-section" class="max-w-7xl mx-auto px-4 py-6">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+      <!-- Left Sidebar: Filters (3 cols on desktop) -->
+      <aside class="lg:col-span-3">
+        <div class="bg-white rounded-xl border border-gray-200 p-4 sticky top-24 shadow-sm">
+          
+          <!-- Filter Header -->
+          <div class="flex items-center justify-between pb-3 border-b border-gray-200">
+            <h3 class="font-bold text-sm text-gray-800 flex items-center gap-2">
+              <svg class="w-4 h-4 text-meesho-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+              Filters
+            </h3>
+            <button onclick="resetAllFilters()" class="text-xs font-semibold text-meesho-purple hover:underline">
+              Clear All
+            </button>
+          </div>
+
+          <div class="divide-y divide-gray-100 text-xs text-gray-700 max-h-[70vh] overflow-y-auto pr-1">
+            
+            <!-- Gender Filter -->
+            <div class="py-3">
+              <h4 class="font-bold text-gray-800 mb-2">Gender / Audience</h4>
+              <div class="space-y-1.5">
+                <label class="flex items-center gap-2 cursor-pointer hover:text-meesho-purple">
+                  <input type="checkbox" onchange="toggleGenderFilter('Women')" class="filter-checkbox rounded text-meesho-purple focus:ring-meesho-purple" />
+                  <span>Women</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer hover:text-meesho-purple">
+                  <input type="checkbox" onchange="toggleGenderFilter('Men')" class="filter-checkbox rounded text-meesho-purple focus:ring-meesho-purple" />
+                  <span>Men</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer hover:text-meesho-purple">
+                  <input type="checkbox" onchange="toggleGenderFilter('Kids')" class="filter-checkbox rounded text-meesho-purple focus:ring-meesho-purple" />
+                  <span>Kids</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer hover:text-meesho-purple">
+                  <input type="checkbox" onchange="toggleGenderFilter('Unisex')" class="filter-checkbox rounded text-meesho-purple focus:ring-meesho-purple" />
+                  <span>Unisex</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Price Filter -->
+            <div class="py-3">
+              <h4 class="font-bold text-gray-800 mb-2">Price Range</h4>
+              <div class="space-y-1.5">
+                <label class="flex items-center gap-2 cursor-pointer hover:text-meesho-purple">
+                  <input type="checkbox" onchange="togglePriceFilter('under-299')" class="filter-checkbox rounded text-meesho-purple focus:ring-meesho-purple" />
+                  <span>Under ₹299</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer hover:text-meesho-purple">
+                  <input type="checkbox" onchange="togglePriceFilter('300-499')" class="filter-checkbox rounded text-meesho-purple focus:ring-meesho-purple" />
+                  <span>₹300 - ₹499</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer hover:text-meesho-purple">
+                  <input type="checkbox" onchange="togglePriceFilter('500-799')" class="filter-checkbox rounded text-meesho-purple focus:ring-meesho-purple" />
+                  <span>₹500 - ₹799</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer hover:text-meesho-purple">
+                  <input type="checkbox" onchange="togglePriceFilter('800-plus')" class="filter-checkbox rounded text-meesho-purple focus:ring-meesho-purple" />
+                  <span>₹800 and above</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Rating Filter -->
+            <div class="py-3">
+              <h4 class="font-bold text-gray-800 mb-2">Customer Rating</h4>
+              <div class="space-y-1.5">
+                <button onclick="setRatingFilter(4.0)" class="w-full flex items-center justify-between p-1.5 rounded hover:bg-gray-50 text-left">
+                  <span class="flex items-center gap-1.5">
+                    <span class="rating-pill text-[10px]">4.0 ★</span>
+                    <span>& above</span>
+                  </span>
+                </button>
+                <button onclick="setRatingFilter(3.5)" class="w-full flex items-center justify-between p-1.5 rounded hover:bg-gray-50 text-left">
+                  <span class="flex items-center gap-1.5">
+                    <span class="rating-pill text-[10px]">3.5 ★</span>
+                    <span>& above</span>
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Fabric Filter -->
+            <div class="py-3">
+              <h4 class="font-bold text-gray-800 mb-2">Fabric / Material</h4>
+              <div class="space-y-1.5">
+                <label class="flex items-center gap-2 cursor-pointer hover:text-meesho-purple">
+                  <input type="checkbox" onchange="toggleFabricFilter('Cotton')" class="filter-checkbox rounded text-meesho-purple" />
+                  <span>Cotton</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer hover:text-meesho-purple">
+                  <input type="checkbox" onchange="toggleFabricFilter('Rayon')" class="filter-checkbox rounded text-meesho-purple" />
+                  <span>Rayon</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer hover:text-meesho-purple">
+                  <input type="checkbox" onchange="toggleFabricFilter('Silk')" class="filter-checkbox rounded text-meesho-purple" />
+                  <span>Silk Blend</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer hover:text-meesho-purple">
+                  <input type="checkbox" onchange="toggleFabricFilter('Georgette')" class="filter-checkbox rounded text-meesho-purple" />
+                  <span>Georgette</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer hover:text-meesho-purple">
+                  <input type="checkbox" onchange="toggleFabricFilter('Denim')" class="filter-checkbox rounded text-meesho-purple" />
+                  <span>Denim</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Color Swatches -->
+            <div class="py-3">
+              <h4 class="font-bold text-gray-800 mb-2">Color</h4>
+              <div class="flex flex-wrap gap-2">
+                <button onclick="toggleColorFilter('Black')" class="px-2.5 py-1 rounded-md border border-gray-300 text-[11px] font-medium hover:border-black">Black</button>
+                <button onclick="toggleColorFilter('Blue')" class="px-2.5 py-1 rounded-md border border-gray-300 text-[11px] font-medium hover:border-blue-600">Blue</button>
+                <button onclick="toggleColorFilter('Pink')" class="px-2.5 py-1 rounded-md border border-gray-300 text-[11px] font-medium hover:border-pink-600">Pink</button>
+                <button onclick="toggleColorFilter('White')" class="px-2.5 py-1 rounded-md border border-gray-300 text-[11px] font-medium hover:border-gray-500">White</button>
+                <button onclick="toggleColorFilter('Red')" class="px-2.5 py-1 rounded-md border border-gray-300 text-[11px] font-medium hover:border-red-600">Red</button>
+                <button onclick="toggleColorFilter('Gold')" class="px-2.5 py-1 rounded-md border border-gray-300 text-[11px] font-medium hover:border-amber-500">Gold</button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </aside>
+
+      <!-- Right Main Feed: Products List (9 cols on desktop) -->
+      <section class="lg:col-span-9">
+        
+        <!-- Controls Bar: Title, Count, Sort -->
+        <div class="bg-white p-3.5 rounded-xl border border-gray-200 mb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
+          <div>
+            <h2 class="text-base sm:text-lg font-extrabold text-gray-900 tracking-tight">Products For You</h2>
+            <span id="products-count-label" class="text-xs text-gray-400 font-medium">Showing items</span>
+          </div>
+
+          <!-- Sort Dropdown -->
+          <div class="flex items-center gap-2 w-full sm:w-auto">
+            <span class="text-xs font-semibold text-gray-500 whitespace-nowrap">Sort by:</span>
+            <select id="sort-by-select" class="text-xs bg-gray-50 border border-gray-300 rounded-lg px-3 py-1.5 font-medium text-gray-700 focus:outline-none focus:border-meesho-purple cursor-pointer">
+              <option value="relevance">Relevance</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="rating">Customer Rating</option>
+              <option value="discount">Highest Discount</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Active Filter Pills (Chips) -->
+        <div id="active-filter-pills" class="mb-4 hidden"></div>
+
+        <!-- Responsive Products Grid -->
+        <div id="products-grid" class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
+          <!-- Dynamically populated via renderProducts() -->
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Product Detail Modal -->
+  <div id="product-detail-modal" class="fixed inset-0 z-50 overflow-y-auto hidden modal-overlay flex items-center justify-center p-2 sm:p-4">
+    <div class="relative bg-white rounded-2xl max-w-4xl w-full max-h-[92vh] overflow-hidden shadow-2xl border border-gray-100 flex flex-col">
+      <!-- Modal Header Close -->
+      <button onclick="closeProductDetail()" class="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+
+      <!-- Modal Body Content -->
+      <div id="product-detail-content" class="overflow-y-auto">
+        <!-- Rendered dynamically via renderDetailModalContent() -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Slide-Over Drawer -->
+  <div id="cart-overlay" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden transition-opacity" onclick="closeCartDrawer()">
+    <div id="cart-drawer" class="absolute right-0 top-0 bottom-0 w-full max-w-md bg-white shadow-2xl flex flex-col cart-drawer transform translate-x-full" onclick="event.stopPropagation()">
+      
+      <!-- Cart Header -->
+      <div class="p-4 border-b border-gray-200 flex items-center justify-between bg-white">
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-meesho-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+          <h3 class="font-bold text-gray-800 text-base">Shopping Cart</h3>
+        </div>
+        <button onclick="closeCartDrawer()" class="text-gray-400 hover:text-gray-600 p-1">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Free Delivery Banner in Cart -->
+      <div class="bg-meesho-greenLight px-4 py-2 border-b border-green-100 flex items-center gap-2 text-xs text-meesho-green font-semibold">
+        <svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+        <span>Yay! You get <strong>Free Delivery</strong> on this order</span>
+      </div>
+
+      <!-- Cart Item List -->
+      <div id="cart-items-list" class="flex-1 overflow-y-auto p-4 space-y-1">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Empty Cart State -->
+      <div id="cart-empty-state" class="flex-1 flex flex-col items-center justify-center p-6 text-center hidden">
+        <div class="w-20 h-20 rounded-full bg-purple-50 flex items-center justify-center text-meesho-purple mb-4">
+          <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        </div>
+        <h4 class="font-bold text-gray-800 text-base">Your cart is empty</h4>
+        <p class="text-xs text-gray-500 mt-1 max-w-xs">Explore thousands of trending fashion, ethnic wear & electronics at wholesale prices.</p>
+        <button onclick="closeCartDrawer(); setVisualCategory('all')" class="mt-5 px-6 py-2.5 bg-meesho-purple text-white font-bold text-xs rounded-xl hover:bg-meesho-purpleDark shadow-md">
+          Start Shopping
+        </button>
+      </div>
+
+      <!-- Cart Bottom Checkout Box -->
+      <div id="cart-summary-box" class="p-4 border-t border-gray-200 bg-white">
+        <!-- Price breakdown -->
+        <div class="space-y-1.5 text-xs text-gray-600 mb-3">
+          <div class="flex justify-between">
+            <span>Total Product Price (M.R.P.)</span>
+            <span id="cart-total-mrp" class="font-medium text-gray-800">₹0</span>
+          </div>
+          <div class="flex justify-between text-meesho-green">
+            <span>Total Discount</span>
+            <span id="cart-total-discount" class="font-semibold">-₹0</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Delivery Charges</span>
+            <span class="text-meesho-green font-bold">FREE</span>
+          </div>
+          <div class="pt-2 border-t border-gray-100 flex justify-between text-sm font-extrabold text-gray-900">
+            <span>Order Total</span>
+            <span id="cart-final-total" class="text-base text-meesho-purple">₹0</span>
+          </div>
+          <div id="cart-savings-highlight" class="text-[11px] font-semibold text-center text-meesho-green bg-green-50 py-1 rounded">
+            🎉 You will save ₹0 on this order!
+          </div>
+        </div>
+
+        <button onclick="openCheckoutModal()" class="w-full py-3 bg-meesho-purple hover:bg-meesho-purpleDark text-white font-bold text-sm rounded-xl transition-all shadow-md flex items-center justify-center gap-2">
+          <span>Proceed to Checkout</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Checkout Flow Modal -->
+  <div id="checkout-modal" class="fixed inset-0 z-50 overflow-y-auto hidden modal-overlay flex items-center justify-center p-3 sm:p-6">
+    <div class="bg-white rounded-2xl max-w-xl w-full shadow-2xl border border-gray-100 overflow-hidden">
+      
+      <!-- Checkout Header with Stepper -->
+      <div class="p-4 sm:p-5 border-b border-gray-200 bg-gray-50 flex items-center justify-between">
+        <div>
+          <h3 class="font-extrabold text-base sm:text-lg text-gray-900">Meesho Safe Checkout</h3>
+          <div class="flex items-center gap-3 text-xs mt-1 text-gray-500">
+            <span id="step-indicator-1" class="text-meesho-purple font-bold">1. Address</span>
+            <span>&rarr;</span>
+            <span id="step-indicator-2">2. Payment</span>
+            <span>&rarr;</span>
+            <span id="step-indicator-3">3. Confirmed</span>
+          </div>
+        </div>
+        <button onclick="closeCheckoutModal()" class="text-gray-400 hover:text-gray-600 p-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Step 1: Delivery Address Form -->
+      <div id="checkout-step-1" class="p-5 sm:p-6">
+        <h4 class="font-bold text-sm text-gray-800 mb-3">Enter Delivery Address</h4>
+        <form onsubmit="handleAddressSubmit(event)" class="space-y-3 text-xs">
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block font-medium text-gray-700 mb-1">Full Name *</label>
+              <input id="addr-name" type="text" required placeholder="e.g. Priya Sharma" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-meesho-purple" />
+            </div>
+            <div>
+              <label class="block font-medium text-gray-700 mb-1">Phone Number *</label>
+              <input id="addr-phone" type="tel" maxlength="10" required placeholder="10-digit mobile" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-meesho-purple" />
+            </div>
+          </div>
+          <div>
+            <label class="block font-medium text-gray-700 mb-1">Flat / House No. / Building Name *</label>
+            <input id="addr-house" type="text" required placeholder="House 42, Green Apartments" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-meesho-purple" />
+          </div>
+          <div>
+            <label class="block font-medium text-gray-700 mb-1">Street / Colony / Landmark *</label>
+            <input id="addr-street" type="text" required placeholder="Near Metro Station, Sector 14" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-meesho-purple" />
+          </div>
+          <div class="grid grid-cols-3 gap-3">
+            <div>
+              <label class="block font-medium text-gray-700 mb-1">Pincode *</label>
+              <input id="addr-pincode" type="text" maxlength="6" required placeholder="110001" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-meesho-purple" />
+            </div>
+            <div>
+              <label class="block font-medium text-gray-700 mb-1">City *</label>
+              <input id="addr-city" type="text" required placeholder="New Delhi" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-meesho-purple" />
+            </div>
+            <div>
+              <label class="block font-medium text-gray-700 mb-1">State *</label>
+              <input id="addr-state" type="text" required placeholder="Delhi" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-meesho-purple" />
+            </div>
+          </div>
+          <button type="submit" class="w-full mt-4 py-3 bg-meesho-purple hover:bg-meesho-purpleDark text-white font-bold rounded-xl text-sm transition-colors shadow">
+            Deliver to This Address &rarr;
+          </button>
+        </form>
+      </div>
+
+      <!-- Step 2: Payment Selection -->
+      <div id="checkout-step-2" class="p-5 sm:p-6 hidden">
+        <h4 class="font-bold text-sm text-gray-800 mb-3">Select Payment Method</h4>
+        <div class="space-y-2.5 text-xs">
+          <!-- COD -->
+          <label class="flex items-center justify-between p-3.5 border-2 border-meesho-purple bg-meesho-purpleLight rounded-xl cursor-pointer">
+            <div class="flex items-center gap-3">
+              <input type="radio" name="payment_method" value="Cash On Delivery" checked class="text-meesho-purple focus:ring-meesho-purple" />
+              <div>
+                <span class="font-bold text-gray-800 block text-sm">Cash on Delivery (COD)</span>
+                <span class="text-gray-500">Pay cash or UPI at your doorstep</span>
+              </div>
+            </div>
+            <span class="text-meesho-green font-bold text-xs">Recommended</span>
+          </label>
+
+          <!-- UPI -->
+          <label class="flex items-center justify-between p-3.5 border border-gray-200 rounded-xl cursor-pointer hover:border-gray-300">
+            <div class="flex items-center gap-3">
+              <input type="radio" name="payment_method" value="UPI (GPay / PhonePe / Paytm)" class="text-meesho-purple focus:ring-meesho-purple" />
+              <div>
+                <span class="font-bold text-gray-800 block text-sm">UPI (Google Pay, PhonePe, Paytm)</span>
+                <span class="text-gray-500">Instant online UPI transfer</span>
+              </div>
+            </div>
+            <span class="text-xs text-gray-400">⚡ Fast</span>
+          </label>
+
+          <!-- Debit/Credit Card -->
+          <label class="flex items-center justify-between p-3.5 border border-gray-200 rounded-xl cursor-pointer hover:border-gray-300">
+            <div class="flex items-center gap-3">
+              <input type="radio" name="payment_method" value="Debit / Credit Card" class="text-meesho-purple focus:ring-meesho-purple" />
+              <div>
+                <span class="font-bold text-gray-800 block text-sm">Debit / Credit Card</span>
+                <span class="text-gray-500">Visa, MasterCard, RuPay</span>
+              </div>
+            </div>
+          </label>
+        </div>
+
+        <div class="mt-5 pt-3 border-t border-gray-100 flex items-center justify-between">
+          <button onclick="setCheckoutStep(1)" class="text-xs text-gray-500 hover:text-gray-800 font-semibold">&larr; Back</button>
+          <div class="text-right">
+            <span class="text-xs text-gray-500 block">Total Payable:</span>
+            <span class="checkout-final-amount text-lg font-extrabold text-meesho-purple">₹0</span>
+          </div>
+        </div>
+
+        <button onclick="completeOrder()" class="w-full mt-4 py-3 bg-meesho-green hover:bg-emerald-700 text-white font-bold rounded-xl text-sm transition-all shadow-md flex items-center justify-center gap-2">
+          <span>Place Order</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        </button>
+      </div>
+
+      <!-- Step 3: Order Success Confirmed Screen -->
+      <div id="checkout-step-3" class="p-8 text-center hidden">
+        <div class="w-20 h-20 bg-green-100 text-meesho-green rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
+          <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        <h3 class="text-2xl font-black text-gray-900">Order Placed Successfully!</h3>
+        <p class="text-xs text-gray-500 mt-2">Thank you for shopping on Meesho. We've notified the supplier.</p>
+        
+        <div class="mt-4 p-4 bg-gray-50 rounded-xl border border-gray-200 text-left text-xs max-w-sm mx-auto space-y-1">
+          <div class="flex justify-between">
+            <span class="text-gray-500">Order ID:</span>
+            <span id="confirmed-order-id" class="font-bold text-gray-800">MSH-000000</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-500">Amount:</span>
+            <span id="confirmed-order-total" class="font-bold text-meesho-purple">₹0</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-500">Estimated Delivery:</span>
+            <span class="font-bold text-meesho-green">Within 3-4 Days</span>
+          </div>
+        </div>
+
+        <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+          <button onclick="closeCheckoutModal(); openOrdersModal()" class="px-5 py-2.5 bg-gray-900 text-white text-xs font-bold rounded-xl hover:bg-black transition-colors">
+            Track My Order
+          </button>
+          <button onclick="closeCheckoutModal(); setVisualCategory('all')" class="px-5 py-2.5 bg-meesho-purple text-white text-xs font-bold rounded-xl hover:bg-meesho-purpleDark transition-colors">
+            Continue Shopping
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- My Orders Modal -->
+  <div id="orders-modal" class="fixed inset-0 z-50 overflow-y-auto hidden modal-overlay flex items-center justify-center p-3 sm:p-6">
+    <div class="bg-white rounded-2xl max-w-xl w-full max-h-[85vh] shadow-2xl border border-gray-100 flex flex-col overflow-hidden">
+      <div class="p-4 border-b border-gray-200 flex items-center justify-between bg-white">
+        <h3 class="font-bold text-base text-gray-900 flex items-center gap-2">
+          <svg class="w-5 h-5 text-meesho-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+          My Orders & Live Tracking
+        </h3>
+        <button onclick="closeOrdersModal()" class="text-gray-400 hover:text-gray-600 p-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div id="orders-list-container" class="p-4 overflow-y-auto flex-1">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Wishlist Modal -->
+  <div id="wishlist-modal" class="fixed inset-0 z-50 overflow-y-auto hidden modal-overlay flex items-center justify-center p-3 sm:p-6">
+    <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] shadow-2xl border border-gray-100 flex flex-col overflow-hidden">
+      <div class="p-4 border-b border-gray-200 flex items-center justify-between bg-white">
+        <h3 class="font-bold text-base text-gray-900 flex items-center gap-2">
+          <svg class="w-5 h-5 text-meesho-pink" fill="currentColor" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+          My Saved Items
+        </h3>
+        <button onclick="closeWishlistModal()" class="text-gray-400 hover:text-gray-600 p-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div id="wishlist-items-container" class="p-4 overflow-y-auto flex-1">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Size Chart Modal -->
+  <div id="size-chart-modal" class="fixed inset-0 z-50 overflow-y-auto hidden modal-overlay flex items-center justify-center p-3">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl">
+      <div class="flex justify-between items-center pb-3 border-b border-gray-200">
+        <h3 class="font-bold text-base text-gray-900">Standard Indian Size Chart</h3>
+        <button onclick="closeSizeChartModal()" class="text-gray-400 hover:text-gray-600">&times;</button>
+      </div>
+      <div class="mt-4 overflow-x-auto text-xs">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-gray-100 text-gray-700">
+              <th class="p-2 border">Size</th>
+              <th class="p-2 border">Bust / Chest (in)</th>
+              <th class="p-2 border">Waist (in)</th>
+              <th class="p-2 border">Length (in)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200 text-gray-600">
+            <tr><td class="p-2 border font-bold">S</td><td class="p-2 border">36</td><td class="p-2 border">32</td><td class="p-2 border">42</td></tr>
+            <tr><td class="p-2 border font-bold">M</td><td class="p-2 border">38</td><td class="p-2 border">34</td><td class="p-2 border">42.5</td></tr>
+            <tr><td class="p-2 border font-bold">L</td><td class="p-2 border">40</td><td class="p-2 border">36</td><td class="p-2 border">43</td></tr>
+            <tr><td class="p-2 border font-bold">XL</td><td class="p-2 border">42</td><td class="p-2 border">38</td><td class="p-2 border">43.5</td></tr>
+            <tr><td class="p-2 border font-bold">XXL</td><td class="p-2 border">44</td><td class="p-2 border">40</td><td class="p-2 border">44</td></tr>
+          </tbody>
+        </table>
+        <p class="text-[11px] text-gray-400 mt-3">* Measurements are in inches. Fits true to standard Indian sizing.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Authentication Modal (Phone + OTP) -->
+  <div id="auth-modal" class="fixed inset-0 z-50 overflow-y-auto hidden modal-overlay flex items-center justify-center p-3">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-gray-100">
+      
+      <!-- Phone Step -->
+      <div id="auth-phone-step">
+        <div class="flex justify-between items-center mb-4">
+          <div class="flex items-center gap-1.5">
+            <div class="w-7 h-7 rounded-lg bg-meesho-purple text-white flex items-center justify-center font-bold text-sm">m</div>
+            <span class="font-extrabold text-base text-gray-900">Sign Up or Log In</span>
+          </div>
+          <button onclick="closeAuthModal()" class="text-gray-400 hover:text-gray-600 text-lg">&times;</button>
+        </div>
+        <p class="text-xs text-gray-500 mb-4">Enter your mobile number to get OTP and access your account</p>
+        <div class="flex items-center border border-gray-300 rounded-xl overflow-hidden focus-within:border-meesho-purple mb-4">
+          <span class="px-3 text-xs font-bold text-gray-600 bg-gray-50 border-r border-gray-300 py-3">+91</span>
+          <input id="auth-phone-input" type="tel" maxlength="10" placeholder="10-digit mobile number" class="w-full px-3 py-2 text-xs text-gray-800 focus:outline-none" />
+        </div>
+        <button onclick="sendAuthOtp()" class="w-full py-2.5 bg-meesho-purple hover:bg-meesho-purpleDark text-white font-bold text-xs rounded-xl shadow transition-colors">
+          Send OTP
+        </button>
+      </div>
+
+      <!-- OTP Step -->
+      <div id="auth-otp-step" class="hidden">
+        <div class="flex justify-between items-center mb-4">
+          <h4 class="font-bold text-base text-gray-900">Verify OTP</h4>
+          <button onclick="closeAuthModal()" class="text-gray-400 hover:text-gray-600">&times;</button>
+        </div>
+        <p class="text-xs text-gray-500 mb-3">Enter the 4-digit OTP sent to <strong id="otp-sent-to-number" class="text-gray-800">+91 0000000000</strong></p>
+        <div class="mb-4">
+          <input id="auth-otp-input" type="text" maxlength="4" placeholder="Enter OTP (e.g. 1234)" class="w-full px-4 py-2.5 text-center text-lg font-bold tracking-widest border border-gray-300 rounded-xl focus:outline-none focus:border-meesho-purple" />
+          <span class="text-[11px] text-gray-400 block text-center mt-1.5">💡 Demo Tip: Use OTP <strong>1234</strong></span>
+        </div>
+        <button onclick="verifyAuthOtp()" class="w-full py-2.5 bg-meesho-purple hover:bg-meesho-purpleDark text-white font-bold text-xs rounded-xl shadow transition-colors">
+          Verify & Continue
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Supplier Hub Modal -->
+  <div id="supplier-modal" class="fixed inset-0 z-50 overflow-y-auto hidden modal-overlay flex items-center justify-center p-3 sm:p-6">
+    <div class="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-gray-100">
+      <div class="flex justify-between items-center pb-3 border-b border-gray-200">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase rounded">0% Commission</span>
+          <h3 class="font-bold text-base text-gray-900">Sell Online on Meesho</h3>
+        </div>
+        <button onclick="closeSupplierModal()" class="text-gray-400 hover:text-gray-600 text-lg">&times;</button>
+      </div>
+      <div class="mt-4 space-y-4 text-xs text-gray-600">
+        <div class="grid grid-cols-3 gap-3 text-center">
+          <div class="p-3 bg-purple-50 rounded-xl">
+            <span class="text-xl block mb-1">💸</span>
+            <strong class="text-gray-800 block">0% Fee</strong>
+            <span class="text-[11px] text-gray-500">Zero commission on all categories</span>
+          </div>
+          <div class="p-3 bg-pink-50 rounded-xl">
+            <span class="text-xl block mb-1">👥</span>
+            <strong class="text-gray-800 block">14 Cr+</strong>
+            <span class="text-[11px] text-gray-500">Active shoppers waiting for you</span>
+          </div>
+          <div class="p-3 bg-emerald-50 rounded-xl">
+            <span class="text-xl block mb-1">⚡</span>
+            <strong class="text-gray-800 block">7-Day Pay</strong>
+            <span class="text-[11px] text-gray-500">Fastest payment cycle in India</span>
+          </div>
+        </div>
+        <p class="leading-relaxed">All you need to start selling is: GSTIN / PAN Number, Bank Account, and Products to sell!</p>
+        <button onclick="showToast('Thank you for registering interest! Our seller team will contact you.'); closeSupplierModal();" class="w-full py-3 bg-meesho-purple hover:bg-meesho-purpleDark text-white font-bold rounded-xl text-xs shadow">
+          Register as Meesho Seller Now
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Download App Modal -->
+  <div id="download-modal" class="fixed inset-0 z-50 overflow-y-auto hidden modal-overlay flex items-center justify-center p-3 sm:p-6">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl text-center">
+      <div class="flex justify-end">
+        <button onclick="closeDownloadModal()" class="text-gray-400 hover:text-gray-600 text-lg">&times;</button>
+      </div>
+      <div class="w-14 h-14 rounded-2xl bg-meesho-purple text-white flex items-center justify-center text-3xl font-black mx-auto mb-3 shadow-md">
+        <span style="font-family: cursive, sans-serif;">m</span>
+      </div>
+      <h3 class="font-extrabold text-lg text-gray-900">Download Meesho App</h3>
+      <p class="text-xs text-gray-500 mt-1 max-w-xs mx-auto">Get exclusive app-only discounts, daily flash deals & track orders anywhere.</p>
+      
+      <!-- Mock QR Code -->
+      <div class="mt-4 p-4 border-2 border-dashed border-gray-300 rounded-xl max-w-[200px] mx-auto bg-gray-50">
+        <svg class="w-32 h-32 mx-auto text-gray-800" viewBox="0 0 100 100" fill="currentColor">
+          <path d="M0 0h30v30H0zm5 5v20h20V5zm50-5h30v30H55zm5 5v20h20V5zM0 55h30v30H0zm5 5v20h20V60zm35-45h10v10H40zm15 10h10v10H55zm-15 10h10v10H40zm25 0h10v10H65zm-25 15h10v10H40zm15 0h10v10H55zm15 0h10v10H70zm-30 15h10v10H40zm15 0h10v10H55zm15 0h10v10H70zm15-45h10v10H85zm0 15h10v10H85zm0 15h10v10H85zm0 15h10v10H85z"/>
+        </svg>
+        <span class="text-[10px] text-gray-400 font-bold block mt-2">Scan QR with Phone Camera</span>
+      </div>
+
+      <div class="mt-4 flex gap-3 justify-center text-xs">
+        <div class="px-4 py-2 bg-gray-900 text-white rounded-lg font-bold flex items-center gap-2">
+          <span>Google Play</span>
+        </div>
+        <div class="px-4 py-2 bg-gray-900 text-white rounded-lg font-bold flex items-center gap-2">
+          <span>App Store</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu Drawer (Side sliding) -->
+  <div id="mobile-menu-overlay" class="fixed inset-0 z-50 bg-black/50 hidden" onclick="closeMobileDrawer()">
+    <div id="mobile-menu-drawer" class="w-72 bg-white h-full shadow-2xl p-5 flex flex-col justify-between transform -translate-x-full transition-transform" onclick="event.stopPropagation()">
+      <div>
+        <div class="flex items-center justify-between pb-4 border-b border-gray-200">
+          <div class="flex items-center gap-1.5">
+            <div class="w-8 h-8 rounded-lg bg-meesho-purple text-white flex items-center justify-center font-bold text-lg">m</div>
+            <span class="font-extrabold text-xl text-meesho-purple">meesho</span>
+          </div>
+          <button onclick="closeMobileDrawer()" class="text-gray-400 text-xl">&times;</button>
+        </div>
+
+        <div class="py-4 space-y-1 text-sm font-medium text-gray-700">
+          <button onclick="setVisualCategory('all'); closeMobileDrawer()" class="w-full text-left py-2 px-3 rounded-lg hover:bg-meesho-purpleLight hover:text-meesho-purple">All Products</button>
+          <button onclick="setVisualCategory('Women Ethnic'); closeMobileDrawer()" class="w-full text-left py-2 px-3 rounded-lg hover:bg-meesho-purpleLight hover:text-meesho-purple">Women Ethnic</button>
+          <button onclick="setVisualCategory('Women Western'); closeMobileDrawer()" class="w-full text-left py-2 px-3 rounded-lg hover:bg-meesho-purpleLight hover:text-meesho-purple">Women Western</button>
+          <button onclick="setVisualCategory('Men'); closeMobileDrawer()" class="w-full text-left py-2 px-3 rounded-lg hover:bg-meesho-purpleLight hover:text-meesho-purple">Men Fashion</button>
+          <button onclick="setVisualCategory('Kids'); closeMobileDrawer()" class="w-full text-left py-2 px-3 rounded-lg hover:bg-meesho-purpleLight hover:text-meesho-purple">Kids & Toys</button>
+          <button onclick="setVisualCategory('Home & Kitchen'); closeMobileDrawer()" class="w-full text-left py-2 px-3 rounded-lg hover:bg-meesho-purpleLight hover:text-meesho-purple">Home & Kitchen</button>
+          <button onclick="setVisualCategory('Beauty & Health'); closeMobileDrawer()" class="w-full text-left py-2 px-3 rounded-lg hover:bg-meesho-purpleLight hover:text-meesho-purple">Beauty & Health</button>
+          <button onclick="setVisualCategory('Jewellery & Accessories'); closeMobileDrawer()" class="w-full text-left py-2 px-3 rounded-lg hover:bg-meesho-purpleLight hover:text-meesho-purple">Jewellery</button>
+          <button onclick="setVisualCategory('Electronics'); closeMobileDrawer()" class="w-full text-left py-2 px-3 rounded-lg hover:bg-meesho-purpleLight hover:text-meesho-purple">Electronics</button>
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-gray-200">
+        <button onclick="openSupplierModal(); closeMobileDrawer()" class="w-full py-2.5 bg-gray-100 hover:bg-gray-200 font-bold text-xs text-gray-800 rounded-lg mb-2">
+          Become a Supplier
+        </button>
+        <button onclick="openAuthModal(); closeMobileDrawer()" class="w-full py-2.5 bg-meesho-purple text-white font-bold text-xs rounded-lg shadow">
+          Sign In
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Sticky Navigation Bar -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-40 px-3 py-2 flex items-center justify-around shadow-lg">
+    <button onclick="setVisualCategory('all')" class="flex flex-col items-center text-meesho-purple focus:outline-none">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+      <span class="text-[10px] font-bold mt-0.5">Home</span>
+    </button>
+    <button onclick="openMobileDrawer()" class="flex flex-col items-center text-gray-500 hover:text-meesho-purple focus:outline-none">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/></svg>
+      <span class="text-[10px] font-medium mt-0.5">Categories</span>
+    </button>
+    <button onclick="openOrdersModal()" class="flex flex-col items-center text-gray-500 hover:text-meesho-purple focus:outline-none">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+      <span class="text-[10px] font-medium mt-0.5">Orders</span>
+    </button>
+    <button onclick="openWishlistModal()" class="relative flex flex-col items-center text-gray-500 hover:text-meesho-purple focus:outline-none">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+      <span class="text-[10px] font-medium mt-0.5">Wishlist</span>
+      <span class="wishlist-badge absolute -top-1 right-2 bg-red-500 text-white font-bold text-[9px] w-3.5 h-3.5 rounded-full flex items-center justify-center hidden">0</span>
+    </button>
+    <button onclick="openAuthModal()" class="flex flex-col items-center text-gray-500 hover:text-meesho-purple focus:outline-none">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+      <span class="text-[10px] font-medium mt-0.5">Profile</span>
+    </button>
+  </nav>
+
+  <!-- Global Footer -->
+  <footer class="bg-gray-900 text-gray-300 pt-12 pb-20 md:pb-12 mt-12 border-t border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-gray-800 text-xs">
+        
+        <!-- Brand Info -->
+        <div class="space-y-3">
+          <div class="flex items-center gap-1.5">
+            <div class="w-8 h-8 rounded-lg bg-meesho-purple text-white flex items-center justify-center font-extrabold text-xl">
+              <span style="font-family: cursive;">m</span>
+            </div>
+            <span class="text-2xl font-black text-white">meesho</span>
+          </div>
+          <p class="text-gray-400 leading-relaxed">
+            Shop Non-Stop on Meesho! India’s favorite shopping destination offering trendy fashion, beauty & home essentials at wholesale prices with Free Delivery.
+          </p>
+          <div class="pt-2">
+            <span class="font-bold text-white block mb-2">Download Our App</span>
+            <div class="flex gap-2">
+              <button onclick="openDownloadModal()" class="px-3 py-1.5 bg-gray-800 text-white rounded hover:bg-gray-700">Google Play</button>
+              <button onclick="openDownloadModal()" class="px-3 py-1.5 bg-gray-800 text-white rounded hover:bg-gray-700">App Store</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shop Categories -->
+        <div>
+          <h4 class="font-bold text-white uppercase tracking-wider mb-3">Shop Categories</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><button onclick="setVisualCategory('Women Ethnic')" class="hover:text-white">Women Ethnic Wear</button></li>
+            <li><button onclick="setVisualCategory('Women Western')" class="hover:text-white">Women Western Wear</button></li>
+            <li><button onclick="setVisualCategory('Men')" class="hover:text-white">Men Fashion & Footwear</button></li>
+            <li><button onclick="setVisualCategory('Kids')" class="hover:text-white">Baby & Kids Store</button></li>
+            <li><button onclick="setVisualCategory('Home & Kitchen')" class="hover:text-white">Home Furnishing & Decor</button></li>
+            <li><button onclick="setVisualCategory('Electronics')" class="hover:text-white">Smart Gadgets & Audio</button></li>
+          </ul>
+        </div>
+
+        <!-- Meesho Links -->
+        <div>
+          <h4 class="font-bold text-white uppercase tracking-wider mb-3">Company & Sell</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><button onclick="openSupplierModal()" class="hover:text-white">Become a Supplier (0% Comm)</button></li>
+            <li><a href="#" class="hover:text-white">Careers at Meesho</a></li>
+            <li><a href="#" class="hover:text-white">Meesho Tech Blog</a></li>
+            <li><a href="#" class="hover:text-white">Newsroom & Media</a></li>
+            <li><a href="#" class="hover:text-white">Investor Relations</a></li>
+            <li><button onclick="openOrdersModal()" class="hover:text-white">Order Tracking</button></li>
+          </ul>
+        </div>
+
+        <!-- Trust & Contact -->
+        <div>
+          <h4 class="font-bold text-white uppercase tracking-wider mb-3">Meesho Trust & Support</h4>
+          <p class="text-gray-400 mb-2">Need help with an order or product?</p>
+          <p class="font-semibold text-white">help@meesho.com</p>
+          <p class="text-gray-400 mt-1">Mon-Sun: 9:00 AM - 9:00 PM IST</p>
+          <div class="mt-4 flex items-center gap-3 text-lg">
+            <span class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-gray-300 hover:text-white cursor-pointer">🌐</span>
+            <span class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-gray-300 hover:text-white cursor-pointer">💬</span>
+            <span class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-gray-300 hover:text-white cursor-pointer">📸</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Copyright Notice -->
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-3">
+        <p>&copy; 2026 Meesho Clone. Built with pride for high fidelity and smooth online shopping experience.</p>
+        <div class="flex gap-4">
+          <a href="#" class="hover:underline">Privacy Policy</a>
+          <a href="#" class="hover:underline">Terms & Conditions</a>
+          <a href="#" class="hover:underline">Security</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/products.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
+

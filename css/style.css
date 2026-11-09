@@ -1,0 +1,245 @@
+/* Meesho Clone Custom Stylesheet */
+:root {
+  --meesho-purple: #9f2089;
+  --meesho-purple-dark: #82156f;
+  --meesho-purple-light: #fbf3fa;
+  --meesho-pink: #f43397;
+  --meesho-pink-dark: #d61f7d;
+  --meesho-accent-yellow: #f8a200;
+  --meesho-green: #038d63;
+  --meesho-green-light: #e6f6f1;
+  --meesho-text-dark: #333333;
+  --meesho-text-muted: #666666;
+  --meesho-text-light: #8b8d97;
+  --meesho-border: #e7e7e7;
+  --meesho-bg: #f9f9f9;
+  --meesho-card-bg: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--meesho-text-dark);
+  background-color: var(--meesho-bg);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Meesho Brand Utilities */
+.bg-meesho-purple {
+  background-color: var(--meesho-purple);
+}
+.text-meesho-purple {
+  color: var(--meesho-purple);
+}
+.border-meesho-purple {
+  border-color: var(--meesho-purple);
+}
+.hover\:bg-meesho-purple-dark:hover {
+  background-color: var(--meesho-purple-dark);
+}
+.bg-meesho-pink {
+  background-color: var(--meesho-pink);
+}
+.text-meesho-pink {
+  color: var(--meesho-pink);
+}
+.bg-meesho-light {
+  background-color: var(--meesho-purple-light);
+}
+.text-meesho-green {
+  color: var(--meesho-green);
+}
+.bg-meesho-green {
+  background-color: var(--meesho-green);
+}
+.bg-meesho-green-light {
+  background-color: var(--meesho-green-light);
+}
+
+/* Header & Navigation */
+.header-search-input:focus {
+  outline: none;
+  border-color: var(--meesho-purple);
+  box-shadow: 0 0 0 1px var(--meesho-purple);
+}
+
+/* Mega Menu Dropdown */
+.mega-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  border-top: 1px solid var(--meesho-border);
+  z-index: 40;
+  animation: fadeInDown 0.2s ease-out;
+}
+
+.nav-category-item:hover .mega-menu {
+  display: block;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Product Card Styling */
+.product-card {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid #f0f0f0;
+}
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  border-color: #e0e0e0;
+}
+
+.product-image-container {
+  overflow: hidden;
+  position: relative;
+  background-color: #f7f7f7;
+  padding-top: 110%; /* 1.1 aspect ratio */
+}
+
+.product-image-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.product-card:hover .product-image-container img {
+  transform: scale(1.04);
+}
+
+/* Rating Pill */
+.rating-pill {
+  background-color: var(--meesho-green);
+  color: white;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  border-radius: 12px;
+  font-size: 11px;
+}
+
+/* Modals & Drawers */
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+  transition: opacity 0.25s ease;
+}
+
+.cart-drawer {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Hero Carousel */
+.carousel-slide {
+  transition: opacity 0.6s ease-in-out;
+}
+
+/* Visual Categories Carousel / Scrollbar */
+.horizontal-scroll-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.horizontal-scroll-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Toast Notifications */
+#toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  animation: toastSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transition: all 0.25s ease;
+}
+
+@keyframes toastSlideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.toast.fade-out {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+/* Custom Checkbox / Radio in filters */
+.filter-checkbox:checked {
+  background-color: var(--meesho-purple);
+  border-color: var(--meesho-purple);
+}
+
+/* Badge Pulse */
+@keyframes badgePop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+.badge-pop {
+  animation: badgePop 0.3s ease-in-out;
+}
+
+/* Bottom Nav on Mobile */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 64px;
+  }
+}
+
